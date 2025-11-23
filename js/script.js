@@ -489,7 +489,7 @@ function initializeWebsite() {
 async function updateGitHubStats() {
   try {
     const response = await fetch(
-      "https://api.github.com/repos/redolenthalo/discord-bot-website-template",
+      "https://api.github.com/repos/itsfatlum/linker-website",
     );
     const data = await response.json();
 
@@ -504,6 +504,45 @@ async function updateGitHubStats() {
 
 updateGitHubStats();
 setInterval(updateGitHubStats, 300000);
+
+// ---------------------- new: Discord widget online count ----------------------
+async function updateDiscordWidgetOnline() {
+  const url = "https://canary.discord.com/api/guilds/1077257780706152489/widget.json";
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+
+    // presence_count is the official online count provided by the widget
+    const online = Number.isInteger(data.presence_count) ? data.presence_count : null;
+
+    const onlineCountEl = document.getElementById("online-count");
+    const onlineIndicator = document.getElementById("online-indicator");
+
+    if (onlineCountEl && online !== null) {
+      onlineCountEl.textContent = `${online} Online`;
+    }
+
+    if (onlineIndicator) {
+      if (typeof online === "number" && online > 0) {
+        onlineIndicator.classList.remove("bg-white/20");
+        onlineIndicator.classList.add("bg-green-500");
+      } else {
+        onlineIndicator.classList.remove("bg-green-500");
+        onlineIndicator.classList.add("bg-white/20");
+      }
+    }
+  } catch (err) {
+    // keep manual values if fetch fails; only log error
+    console.error("Failed to fetch Discord widget:", err);
+  }
+}
+
+// Run after DOM is ready so elements exist, then poll every 60s
+document.addEventListener("DOMContentLoaded", () => {
+  updateDiscordWidgetOnline();
+  setInterval(updateDiscordWidgetOnline, 60000);
+});
 
 function scrollToTop() {
   window.scrollTo({
