@@ -1,16 +1,21 @@
 const commandsData = {
   category1: {
-    icon: "📜",
-    title: "Category 1",
+    icon: "🌎",
+    title: "Global–Chat",
     commands: [
       {
-        name: "/command1",
-        description: "Description of command1",
+        name: "/gc rules",
+        description: "📖 › Shows you the current global chat rules.",
         permission: "All",
       },
       {
-        name: "/command2",
-        description: "Description of command2",
+        name: "/gc add",
+        description: "➕ › Set a channel to be the global chat.",
+        permission: "Admin",
+      },
+      {
+        name: "/gc roles",
+        description: "🏆 › Get a list of all roles.",
         permission: "All",
       },
     ],
