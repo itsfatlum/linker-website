@@ -512,7 +512,7 @@ setInterval(updateGitHubStats, 300000);
 
 // ---------------------- new: Discord widget online count ----------------------
 async function updateDiscordWidgetOnline() {
-  const url = "https://canary.discord.com/api/guilds/1077257780706152489/widget.json";
+  const url = "https://discord.com/api/guilds/1411425509090394296/widget.json";
   try {
     const res = await fetch(url);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
